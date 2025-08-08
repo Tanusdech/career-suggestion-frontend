@@ -54,7 +54,7 @@ export default function FeedbackModal({ isOpen, onClose }) {
     }, 400);
   };
 
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL + "/feedback";
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL + "/feedback";
 
   const handleSubmit = async () => {
     if (!rating) {

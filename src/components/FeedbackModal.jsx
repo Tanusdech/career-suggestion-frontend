@@ -54,6 +54,7 @@ export default function FeedbackModal({ isOpen, onClose }) {
     }, 400);
   };
 
+  console.log("Backend URL from env:", import.meta.env.VITE_BACKEND_URL);
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL + "/feedback";
 
   const handleSubmit = async () => {

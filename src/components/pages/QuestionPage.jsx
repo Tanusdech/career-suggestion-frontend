@@ -1,5 +1,5 @@
 // src/components/pages/QuestionPage.jsx
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Section, Card, Button, Label, InputText, RadioGroup } from '../UI';
 import { useToast } from '../../context/ToastContext';
 import Footer from '../Footer';
@@ -18,20 +18,46 @@ export default function QuestionPage({
   const { showToast } = useToast();
   const [openDropdown, setOpenDropdown] = useState(null);
 
+  // refs ของคำถาม
+  const questionRefs = useRef({});
+  // highlight state ของ field และคำถาม
+  const [highlighted, setHighlighted] = useState({});
+
   const handleSubmit = () => {
-    const unanswered = questions.some(q => answers[q.id] === undefined);
-    if (unanswered || !gender || !age || !education) {
-      showToast({
-        type: 'error',
-        message: 'กรุณาตอบคำถามให้ครบทุกข้อก่อนส่ง',
-      });
+    // ตรวจสอบข้อมูลเบื้องต้น
+    const firstEmptyField = !gender ? 'gender' : !age ? 'age' : !education ? 'education' : null;
+
+    if (firstEmptyField) {
+      showToast({ type: 'error', message: 'กรุณากรอกข้อมูลเบื้องต้นให้ครบ' });
+
+      setHighlighted(prev => ({ ...prev, [firstEmptyField]: true }));
+      setTimeout(() => setHighlighted(prev => ({ ...prev, [firstEmptyField]: false })), 1500);
+
+      const el = document.getElementById(firstEmptyField);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
       return;
     }
+
+    // ตรวจสอบคำถามที่ยังไม่ได้ตอบ
+    const unanswered = questions.find(q => answers[q.id] === undefined);
+    if (unanswered) {
+      showToast({ type: 'error', message: 'กรุณาตอบคำถามให้ครบทุกข้อก่อนส่ง' });
+
+      setHighlighted(prev => ({ ...prev, [unanswered.id]: true }));
+      setTimeout(() => setHighlighted(prev => ({ ...prev, [unanswered.id]: false })), 1500);
+
+      const el = questionRefs.current[unanswered.id];
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      return;
+    }
+
     onSubmit();
   };
 
   const handleToggleDropdown = (key) => {
-    setOpenDropdown((prev) => (prev === key ? null : key));
+    setOpenDropdown(prev => (prev === key ? null : key));
   };
 
   return (
@@ -45,12 +71,15 @@ export default function QuestionPage({
         <Card className="mb-6 sm:mb-8 bg-card">
           <h2 className="text-lg sm:text-xl font-semibold mb-4">ข้อมูลเบื้องต้น</h2>
           <div className="space-y-4">
-            <div>
+            <div
+              id="gender"
+              className={`p-2 rounded transition-all duration-500 ${highlighted['gender'] ? 'border-2 border-red-500 bg-red-50' : ''}`}
+            >
               <Label htmlFor="gender">เพศ</Label>
               <RadioGroup
                 name="gender"
                 selectedValue={gender}
-                onChange={(val) => setGender(val)}
+                onChange={setGender}
                 options={[
                   { label: 'ชาย', value: 'male' },
                   { label: 'หญิง', value: 'female' },
@@ -59,10 +88,13 @@ export default function QuestionPage({
               />
             </div>
 
-            <div>
+            <div
+              id="age"
+              className={`p-2 rounded transition-all duration-500 ${highlighted['age'] ? 'border-2 border-red-500 bg-red-50' : ''}`}
+            >
               <Label htmlFor="age">อายุ</Label>
               <InputText
-                id="age"
+                id="age-input"
                 type="number"
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
@@ -70,12 +102,15 @@ export default function QuestionPage({
               />
             </div>
 
-            <div>
+            <div
+              id="education"
+              className={`p-2 rounded transition-all duration-500 ${highlighted['education'] ? 'border-2 border-red-500 bg-red-50' : ''}`}
+            >
               <Label htmlFor="education">ระดับการศึกษา</Label>
               <RadioGroup
                 name="education"
                 selectedValue={education}
-                onChange={(val) => setEducation(val)}
+                onChange={setEducation}
                 options={[
                   { label: 'ประถมศึกษา', value: 'primary' },
                   { label: 'มัธยมศึกษา', value: 'secondary' },
@@ -93,14 +128,15 @@ export default function QuestionPage({
           <h2 className="text-lg sm:text-xl font-semibold mb-4">แบบสอบถาม 10 ข้อ</h2>
           <div className="space-y-6">
             {questions.map(({ id, question, options }) => (
-              <div key={id}>
+              <div
+                key={id}
+                ref={(el) => (questionRefs.current[id] = el)}
+                className={`p-2 rounded transition-all duration-500 ${highlighted[id] ? 'border-2 border-red-500 bg-red-50' : ''}`}
+              >
                 <Label className="mb-2">{question}</Label>
                 <RadioGroup
                   name={id}
-                  options={options.map((opt, idx) => ({
-                    label: opt.label,
-                    value: idx, // เก็บเป็นตัวเลข 0-5
-                  }))}
+                  options={options.map((opt, idx) => ({ label: opt.label, value: idx }))}
                   selectedValue={answers[id] ?? null}
                   onChange={(val) => onAnswerChange(id, Number(val))}
                 />

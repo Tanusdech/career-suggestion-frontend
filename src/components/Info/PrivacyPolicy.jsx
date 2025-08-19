@@ -6,7 +6,7 @@ export default function PrivacyPolicy() {
     <>
       <h3 className="text-lg sm:text-xl font-semibold mb-2 leading-snug">
         นโยบายความเป็นส่วนตัว{' '}
-        <span className="whitespace-nowrap text-base font-normal">(Privacy Policy)</span>
+        {/* <span className="whitespace-nowrap text-base font-normal">(Privacy Policy)</span> */}
       </h3>
       <p className="mb-4 text-sm text-neutral-700">
         ระบบนี้ดำเนินการและดูแลโดย <strong>นายธนัสเดช มนต์พลับ</strong> (Tanusdech Monplub) ซึ่งรับผิดชอบในการเก็บรักษาและจัดการข้อมูลส่วนบุคคลของผู้ใช้

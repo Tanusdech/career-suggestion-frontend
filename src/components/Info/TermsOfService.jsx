@@ -6,7 +6,7 @@ export default function TermsOfService() {
     <>
       <h3 className="text-lg sm:text-xl font-semibold mb-2 leading-snug">
         ข้อกำหนดการให้บริการ{' '}
-        <span className="whitespace-nowrap text-base font-normal">(Terms of Service)</span>
+        {/* <span className="whitespace-nowrap text-base font-normal">(Terms of Service)</span> */}
       </h3>
       <p className="mb-4 text-sm text-neutral-700">
         ระบบนี้ถูกพัฒนาและให้บริการโดย <strong>นายธนัสเดช มนต์พลับ</strong> (Tanusdech Monplub) ซึ่งเป็นผู้รับผิดชอบหลักในการดูแลระบบและข้อมูลที่เกี่ยวข้อง
@@ -14,7 +14,7 @@ export default function TermsOfService() {
       <ol className="list-decimal list-inside space-y-2 text-sm text-neutral-700">
         <li>
           <strong>ข้อกำหนดทั่วไป</strong>
-          <p>1.1 เว็บไซต์และระบบแนะนำอาชีพ (“ระบบ”) จัดทำขึ้นเพื่อให้บริการคำแนะนำเกี่ยวกับอาชีพที่เหมาะสมกับผู้ใช้ตามข้อมูลที่ได้รับจากแบบสอบถาม</p>
+          <p>1.1 เว็บไซต์และระบบแนะนำอาชีพ จัดทำขึ้นเพื่อให้บริการคำแนะนำเกี่ยวกับอาชีพที่เหมาะสมกับผู้ใช้ตามข้อมูลที่ได้รับจากแบบสอบถาม</p>
           <p>1.2 การใช้บริการของระบบถือว่าผู้ใช้ได้อ่านและยอมรับข้อกำหนดและเงื่อนไขนี้โดยครบถ้วน</p>
         </li>
         <li>

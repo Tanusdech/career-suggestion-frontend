@@ -103,7 +103,6 @@ export default function ResultPage({ results, onRestart }) {
               );
             })}
           </div>
-
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
             <Button onClick={handleRestartWithFade}>เริ่มทำแบบสอบถามใหม่</Button>
             <Button
@@ -121,7 +120,7 @@ export default function ResultPage({ results, onRestart }) {
               href="https://www.phuketvc.ac.th/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-red-400 hover:text-red-500 font-bold transition-colors duration-200"
+              className="text-sm sm:text-base md:text-lg text-red-400 hover:text-red-500 font-bold transition-colors duration-200 break-words"
             >
               👉 เยี่ยมชมเว็บไซต์วิทยาลัยอาชีวศึกษาภูเก็ต
             </a>

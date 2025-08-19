@@ -92,7 +92,7 @@ export default function CareerSuggestionCard({
             <section className="mb-5">
               <h4 className="flex items-center gap-2 text-lg font-semibold mb-2 text-primary-700">
                 <FaLightbulb className={iconColors.description} />
-                คำอธิบาย
+                คำอธิบายอาชีพ
               </h4>
               <p className="whitespace-pre-line leading-relaxed">{description || '-'}</p>
             </section>
@@ -146,7 +146,7 @@ export default function CareerSuggestionCard({
             {careerURL && (
               <section className="flex justify-center mb-4">
                 <h4
-                  className="flex items-center gap-2 text-lg font-semibold text-primary-700 cursor-pointer hover:underline animate-pulse"
+                  className="flex items-center gap-1 sm:gap-2 text-sm sm:text-base md:text-lg font-semibold text-primary-700 cursor-pointer hover:underline animate-pulse"
                   style={{ animationDuration: '1s' }}
                   onClick={() => window.open(careerURL, '_blank', 'noopener,noreferrer')}
                 >
@@ -155,6 +155,10 @@ export default function CareerSuggestionCard({
                 </h4>
               </section>
             )}
+            {/* Disclaimer Message */}
+            <p className="text-[clamp(10px,1vw,12px)] text-gray-500 mb-2 text-center">
+              ผลลัพธ์นี้เป็นเพียงการแนะนำ อาจมีข้อผิดพลาด ควรตรวจสอบข้อมูลสำคัญ
+            </p>
           </motion.div>
         )}
       </AnimatePresence>

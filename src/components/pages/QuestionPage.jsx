@@ -142,30 +142,29 @@ export default function QuestionPage({
                   อายุ
                 </Label>
 
-<InputText
-  id="age-input"
-  type="text"
-  inputMode="numeric"
-  pattern="[0-9]*"
-  value={age}
-  onChange={(e) => {
-    let val = e.target.value;
+                <InputText
+                  id="age-input"
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  value={age}
+                  onChange={(e) => {
+                    let val = e.target.value;
 
-    val = val.replace(/[^0-9]/g, "");
+                    val = val.replace(/[^0-9]/g, "");
 
-    if (val !== "") {
-      const num = parseInt(val, 10);
-      if (num >= 1 && num <= 99) {
-        setAge(String(num));
-      }
-    } else {
-      setAge("");
-    }
-  }}
-  placeholder="1-99"
-  className="w-24 sm:w-28 md:w-32 text-center px-3 py-1"
-/>
-
+                    if (val !== "") {
+                      const num = parseInt(val, 10);
+                      if (num >= 1 && num <= 99) {
+                        setAge(String(num));
+                      }
+                    } else {
+                      setAge("");
+                    }
+                  }}
+                  placeholder="1-99"
+                  className="w-24 sm:w-28 md:w-32 text-center px-3 py-1"
+                />
 
                 <span className="whitespace-nowrap">ปี</span>
               </div>
@@ -202,7 +201,7 @@ export default function QuestionPage({
                 ref={(el) => (questionRefs.current[id] = el)}
                 className={`p-2 rounded transition-all duration-500 ${highlighted[id] ? 'border-2 border-red-500 bg-red-50' : ''}`}
               >
-                <Label className="mb-2">{question}</Label>
+                <Label className="mb-2 font-semibold bg-yellow-50 p-1 rounded">{question}</Label>
                 <RadioGroup
                   name={id}
                   options={options.map((opt, idx) => ({ label: opt.label, value: idx }))}

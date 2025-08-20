@@ -8,11 +8,11 @@ export default function InfoDropdown({ title, content, isOpen, onClose }) {
   return (
     <div
       className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 p-4"
-      onClick={onClose} // ปิดเมื่อคลิกพื้นหลัง
+      onClick={onClose}
     >
       <Card
         className="max-w-3xl w-full p-6 relative max-h-[80vh] overflow-y-auto"
-        onClick={(e) => e.stopPropagation()} // กันไม่ให้ปิดเมื่อคลิกในกล่อง
+        onClick={(e) => e.stopPropagation()}
       >
         <button
           aria-label="Close"

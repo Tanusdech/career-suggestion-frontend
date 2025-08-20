@@ -23,9 +23,16 @@ export default function QuestionPage({
   // highlight state ของ field และคำถาม
   const [highlighted, setHighlighted] = useState({});
 
-  const handleSubmit = () => {
+  const [genderCustom, setGenderCustom] = useState('');
+
+    const handleSubmit = () => {
     // ตรวจสอบข้อมูลเบื้องต้น
-    const firstEmptyField = !gender ? 'gender' : !age ? 'age' : !education ? 'education' : null;
+    let firstEmptyField = !gender ? 'gender' : !age ? 'age' : !education ? 'education' : null;
+
+    // ✅ เพิ่มตรงนี้: ตรวจสอบกรณีเลือก "อื่นๆ" แต่ไม่กรอกช่องระบุ
+    if (gender === 'custom' && (!genderCustom || genderCustom.trim() === '')) {
+      firstEmptyField = 'gender';
+    }
 
     if (firstEmptyField) {
       showToast({ type: 'error', message: 'กรุณากรอกข้อมูลเบื้องต้นให้ครบ' });
@@ -73,33 +80,95 @@ export default function QuestionPage({
           <div className="space-y-4">
             <div
               id="gender"
-              className={`p-2 rounded transition-all duration-500 ${highlighted['gender'] ? 'border-2 border-red-500 bg-red-50' : ''}`}
+              className={`p-4 rounded-lg transition-all duration-500 ${
+                highlighted['gender'] ? 'border-2 border-red-500 bg-red-50' : 'bg-white'
+              }`}
             >
-              <Label htmlFor="gender">เพศ</Label>
-              <RadioGroup
-                name="gender"
-                selectedValue={gender}
-                onChange={setGender}
-                options={[
+              <Label htmlFor="gender" className="font-semibold mb-2 block">
+                เพศ
+              </Label>
+
+              <div className="flex flex-col gap-3 mt-1">
+                {[
                   { label: 'ชาย', value: 'male' },
                   { label: 'หญิง', value: 'female' },
                   { label: 'ไม่ระบุ', value: 'other' },
-                ]}
-              />
+                  { label: 'อื่นๆ', value: 'custom' },
+                ].map((opt) => (
+                  <div key={opt.value} className="flex flex-col sm:flex-row sm:items-center gap-2">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        id={`gender-${opt.value}`}
+                        name="gender"
+                        value={opt.value}
+                        checked={gender === opt.value}
+                        onChange={() => {
+                          if (opt.value === 'custom') {
+                            setGender('custom');
+                            setGenderCustom('');
+                          } else {
+                            setGender(opt.value);
+                            setGenderCustom('');
+                          }
+                        }}
+                        className="accent-primary-600 w-5 h-5"
+                      />
+                      <span>{opt.label}</span>
+                    </label>
+
+                    {opt.value === 'custom' && gender === 'custom' && (
+                      <InputText
+                        type="text"
+                        placeholder="โปรดระบุ..."
+                        value={genderCustom}
+                        onChange={(e) => setGenderCustom(e.target.value)}
+                        className="ml-6 sm:ml-4 w-full sm:w-64 px-2 py-1 border rounded focus:outline-none focus:ring-2 focus:ring-primary-400"
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div
               id="age"
-              className={`p-2 rounded transition-all duration-500 ${highlighted['age'] ? 'border-2 border-red-500 bg-red-50' : ''}`}
+              className={`p-2 rounded transition-all duration-500 ${
+                highlighted['age'] ? 'border-2 border-red-500 bg-red-50' : ''
+              }`}
             >
-              <Label htmlFor="age">อายุ</Label>
-              <InputText
-                id="age-input"
-                type="number"
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
-                placeholder="กรอกอายุของคุณ"
-              />
+              <div className="flex items-center gap-2">
+                <Label htmlFor="age-input" className="whitespace-nowrap">
+                  อายุ
+                </Label>
+
+<InputText
+  id="age-input"
+  type="text"
+  inputMode="numeric"
+  pattern="[0-9]*"
+  value={age}
+  onChange={(e) => {
+    let val = e.target.value;
+
+    val = val.replace(/[^0-9]/g, "");
+
+    if (val !== "") {
+      const num = parseInt(val, 10);
+      if (num >= 1 && num <= 99) {
+        setAge(String(num));
+      }
+    } else {
+      setAge("");
+    }
+  }}
+  placeholder="1-99"
+  className="w-24 sm:w-28 md:w-32 text-center px-3 py-1"
+/>
+
+
+                <span className="whitespace-nowrap">ปี</span>
+              </div>
             </div>
 
             <div

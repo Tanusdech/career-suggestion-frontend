@@ -7,7 +7,6 @@ export default function Footer({ onToggle }) {
   const [openQR, setOpenQR] = useState(false);
   const qrRef = useRef(null);
 
-  // ปิด dropdown เมื่อคลิกข้างนอก
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (qrRef.current && !qrRef.current.contains(event.target)) {

@@ -9,7 +9,7 @@ import { ToastProvider } from './context/ToastContext.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ToastProvider>   {/* ✅ ห่อ App ด้วย ToastProvider */}
+    <ToastProvider>
       <App />
     </ToastProvider>
   </React.StrictMode>

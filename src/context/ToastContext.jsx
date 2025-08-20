@@ -15,7 +15,6 @@ export const ToastProvider = ({ children }) => {
   const [toasts, setToasts] = useState([]);
 
   const showToast = useCallback((content, defaultType = "success", duration = 3000) => {
-    // รองรับ content แบบ object { message, type } หรือ string/JSX
     let message, type;
     if (typeof content === "object" && content !== null && "message" in content) {
       message = content.message;

@@ -92,7 +92,7 @@ export function InputText({
   );
 }
 
-// Radio button group (ใช้สำหรับคำถามตัวเลือก 5 ตัวเลือก)
+// Radio button group (ใช้สำหรับคำถามตัวเลือก 6 ตัวเลือก)
 export function RadioGroup({ name, options, selectedValue, onChange }) {
   return (
     <div className="space-y-2">
